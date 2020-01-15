@@ -1,0 +1,37 @@
+program odpalamy z określonymi parametrami
+
+przykładowe dane w bazie: 
+login = kapitan
+password = bomba
+data = skurwol,na,pokladzie
+
+1. rejestracja użytkowanika
+komenda cmd: sterownikbazysqlite adduser login password
+przyklad: sterownikbazysqlite adduser kapitan bomba
+return (to zwraca konsola): nic nie zwraca
+
+
+2. logowanie 
+komenda cmd: sterownikbazysqlite login login password
+przyklad: sterownikbazysqlite login kapitan bomba
+return: kapitan
+
+! w logowaniu trzeba sprawdzić czy login i haslo które przyszły
+z fronta występują w bazie. Program zwróci login jeśli tak i to będzie 
+informacja o tym że weryfikacja danych jest poprawna
+
+
+3. pobranie danych 
+komenda cmd: sterownikbazysqlite get login password
+przyklad: sterownikbazysqlite get kapitan bomba
+return skurwol,na,pokladzie
+
+!tutaj konsola zwraca liste todo usera. Jeśli to nowy user to zwróci pustą.
+
+
+4.aktualizacja todo listy
+komenda cmd: sterownikbazysqlite update login password data
+przyklad: sterownikbazysqlite update kapitan bomba karabin,wóda,działolaserowe,kupa
+return karabin,wóda,działolaserowe,kupa
+
+!tutaj lista którą front wysyła po zmianach w swojej liście todo
