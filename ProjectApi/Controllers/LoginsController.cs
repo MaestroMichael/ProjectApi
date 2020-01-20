@@ -134,7 +134,7 @@ namespace ProjectApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            string check;
+            //string check;
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -150,61 +150,24 @@ namespace ProjectApi.Controllers
             Console.WriteLine(err);
             process.WaitForExit();
             // check= System.Net.ProcessStartInfo.GetResponse();
-            if (output == user.login + "\r\n") 
-            {
-                Console.WriteLine("Zalogowano pomyslnie");
-            }
-            
             var login = await _context.Login.Where(x => x.login == user.login).ToListAsync();
-            //if (login!=null)
-            //{
-            //    Console.WriteLine("Zalogowano pomyslnie");
-            //}
-
-            //using (var process = new Process())
-            //{
-            //    try
-            //    {
-            //        //~\Contents\SterownikBazySqlite.exe
-            //        process.StartInfo.FileName = "SterownikBazySqlite.exe"; // relative path. absolute path works too.
-            //        process.StartInfo.WorkingDirectory = @"C:/Users/Michal/source/repos/ProjectApi/ProjectApi/Contents/";
-            //        process.StartInfo.Arguments = $"adduser {user.login} {user.password}";
-            //        //process.StartInfo.FileName = @"cmd.exe";
-            //        //process.StartInfo.Arguments = @"/c dir";      // print the current working directory information
-            //        process.StartInfo.CreateNoWindow = true;
-            //        process.StartInfo.UseShellExecute = false;
-            //        //process.StartInfo.UseShellExecute = true;
-            //        process.StartInfo.Verb = "runas";
-            //        process.StartInfo.RedirectStandardOutput = true;
-            //        process.StartInfo.RedirectStandardError = true;
-
-            //        //process.OutputDataReceived += (sender, data) => Console.WriteLine(data.Data);
-            //        //process.ErrorDataReceived += (sender, data) => Console.WriteLine(data.Data);
-            //        Console.WriteLine("starting");
-            //        process.Start();
-            //        process.BeginOutputReadLine();
-            //        process.BeginErrorReadLine();
-            //         var exited = process.WaitForExit(1000 * 10);     // (optional) wait up to 10 seconds
-            //    Console.WriteLine($"exit {exited}");
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        Console.WriteLine(e.InnerException);
-            //    }
-            // }
-
-
-            //string cPath = "C:\\Users\\Michal\\Desktop\\projekt\\";
-            //string asd = @"C:\Users\Michal\Desktop\projekt\sterownikbazysqlite.exe";
-            //string filename = Path.Combine(cPath, "SterownikBazySqlite.exe");
-            //Console.WriteLine("Login"+user.login+" Haslo "+user.password);
-            //var param= "adduser " + user.login + " " + user.password;
-
-            //Console.WriteLine(param);
-            //var proc = System.Diagnostics.Process.Start(asd,param);
-
             _context.Login.Add(user);
             await _context.SaveChangesAsync();
+            if (output !=null&& output!="") 
+            {
+                Console.WriteLine("Zalogowano pomyslnie");
+                return Ok(user.login);
+                //return CreatedAtAction(nameof(GetLogin), new { id = user.Id }, user);
+            }
+            else
+            {
+                return NotFound();
+            }
+            
+            
+            
+
+            
             //proc.CloseMainWindow();
             //proc.Close();
 
